@@ -1,17 +1,56 @@
 ---
+import { getCollection } from 'astro:content';
 
+// 1. Fetch all project documents from the content collection
+const projects = await getCollection('projects');
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Engineering Portfolio</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #333;
+    }
+    h1 { color: #111; margin-bottom: 5px; }
+    .project-card {
+      background: white;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .project-link {
+      color: #0076ff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>My Engineering Portfolio</h1>
+  <p>Welcome to my workshop. Here is a look at the systems I've engineered and the tradeoffs I weighed along the way.</p>
+
+  <section>
+    {projects.map(project => (
+      <div class="project-card">
+        <a class="project-link" href={`/projects/${project.id}`}>
+          {project.data.title}
+        </a>
+        <p>{project.data.description}</p>
+      </div>
+    ))}
+  </section>
+</body>
 </html>

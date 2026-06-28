@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+
+// 1. Tell Astro which dynamic paths exist based on our markdown files
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  
+  // === DEBUG CHECKPOINT ===
+  // This will print out exactly what Astro has detected inside your terminal window
+  console.log("=== DETECTED PROJECTS ===", projects.map(p => ({ id: p.id, data: p.data })));
+  
+  return projects.map(project => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+// 2. Grab the specific project data passed via props
+const { project } = Astro.props;
+// 3. Extract the Markdown body content component
+const { Content } = await render(project);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{project?.data?.title || 'Loading...'}</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #333;
+    }
+    h1 { color: #111; border-bottom: 2px solid #eaeaea; padding-bottom: 10px; }
+    h2 { color: #0076ff; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <h1>{project?.data?.title}</h1>
+  <p><em>{project?.data?.description}</em></p>
+  
+  <Content />
+</body>
+</html>
