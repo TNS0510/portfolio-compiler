@@ -1,7 +1,6 @@
-# AI-Powered Competitive Intelligence Research Agent
-
-An autonomous full-stack monitoring system that tracks competitor web changes and generates strategic AI briefings using Gemini and FastAPI.
-
+---
+title: "AI-Powered Competitive Intelligence Research Agent"
+description: "An autonomous full-stack monitoring system that tracks competitor web changes and generates strategic AI briefings using Gemini and FastAPI."
 ---
 
 ## What I Built
