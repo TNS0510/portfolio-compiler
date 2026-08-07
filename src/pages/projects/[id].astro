@@ -6,7 +6,6 @@ export async function getStaticPaths() {
   const projects = await getCollection('projects');
   
   // === DEBUG CHECKPOINT ===
-  // This will print out exactly what Astro has detected inside your terminal window
   console.log("=== DETECTED PROJECTS ===", projects.map(p => ({ id: p.id, data: p.data })));
   
   return projects.map(project => ({
@@ -37,11 +36,24 @@ const { Content } = await render(project);
       background: #fafafa;
       color: #333;
     }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #0076ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
     h1 { color: #111; border-bottom: 2px solid #eaeaea; padding-bottom: 10px; }
     h2 { color: #0076ff; margin-top: 40px; }
   </style>
 </head>
 <body>
+  <!-- Navigation link to return home -->
+  <a class="back-link" href="/">← Back to All Projects</a>
+
   <h1>{project?.data?.title}</h1>
   <p><em>{project?.data?.description}</em></p>
   
