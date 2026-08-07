@@ -1,6 +1,7 @@
 ---
-title: "AI-Powered Competitive Intelligence Research Agent"
-description: "An autonomous full-stack monitoring system that tracks competitor web changes and generates strategic AI briefings using Gemini and FastAPI."
+title: AI-Powered Competitive Intelligence Research Agent
+description: An autonomous full-stack monitoring system that tracks competitor web changes and generates strategic AI briefings using Gemini and FastAPI.
+tags: ["AI", "FastAPI", "Gemini", "Python"]
 ---
 
 ## What I Built

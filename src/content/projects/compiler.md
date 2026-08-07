@@ -1,6 +1,7 @@
 ---
-title: "Custom Compiler"
-description: "A lightweight compiler built to understand language parsing."
+title: Custom Compiler
+description: A lightweight compiler built to understand language parsing.
+tags: ["Compilers", "TypeScript", "Parsing"]
 ---
 
 ## What I Built

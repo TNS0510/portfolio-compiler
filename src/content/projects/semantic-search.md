@@ -1,6 +1,7 @@
 ---
-title: "Semantic PDF Searcher"
-description: "A semantic search engine that lets users query 200-page PDFs in seconds using vector embeddings."
+title: Semantic PDF Searcher
+description: A semantic search engine that lets users query 200-page PDFs in seconds using vector embeddings.
+tags: ["AI", "Vector DB", "Python", "PDF"]
 ---
 
 ## What I Built
