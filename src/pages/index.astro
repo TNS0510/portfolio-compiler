@@ -3,6 +3,9 @@ import { getCollection } from 'astro:content';
 
 // 1. Fetch all project documents from the content collection
 const projects = await getCollection('projects');
+
+// 2. Dynamically calculate the total number of projects available
+const totalProjects = projects.length;
 ---
 
 <!DOCTYPE html>
@@ -22,6 +25,20 @@ const projects = await getCollection('projects');
       color: #333;
     }
     h1 { color: #111; margin-bottom: 5px; }
+    
+    /* Style for our new live counter badge */
+    .counter-badge {
+      display: inline-block;
+      background-color: #e6f0ff;
+      color: #0052cc;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      margin-bottom: 20px;
+      border: 1px solid #cce0ff;
+    }
+
     .project-card {
       background: white;
       border: 1px solid #e1e4e8;
@@ -41,6 +58,11 @@ const projects = await getCollection('projects');
 <body>
   <h1>My Engineering Portfolio</h1>
   <p>Welcome to my workshop. Here is a look at the systems I've engineered and the tradeoffs I weighed along the way.</p>
+
+  <!-- Live Counter Badge -->
+  <div class="counter-badge">
+    {totalProjects} {totalProjects === 1 ? 'Project' : 'Projects'} Completed
+  </div>
 
   <section>
     {projects.map(project => (
