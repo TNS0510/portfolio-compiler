@@ -4,8 +4,13 @@ import { getCollection } from 'astro:content';
 // 1. Fetch all project documents from the content collection
 const projects = await getCollection('projects');
 
-// 2. Dynamically calculate the total number of projects available
+// 2. Calculate the total number of projects
 const totalProjects = projects.length;
+
+// 3. Dynamically extract all unique tags across all projects
+const allTags = Array.from(
+  new Set(projects.flatMap(project => project.data.tags || []))
+);
 ---
 
 <!DOCTYPE html>
@@ -26,7 +31,6 @@ const totalProjects = projects.length;
     }
     h1 { color: #111; margin-bottom: 5px; }
     
-    /* Live counter badge */
     .counter-badge {
       display: inline-block;
       background-color: #e6f0ff;
@@ -39,6 +43,30 @@ const totalProjects = projects.length;
       border: 1px solid #cce0ff;
     }
 
+    /* Filter Bar Styling */
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      background: white;
+      border: 1px solid #d0d7de;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #24292f;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #0969da;
+      color: white;
+      border-color: #0969da;
+    }
+
     .project-card {
       background: white;
       border: 1px solid #e1e4e8;
@@ -46,6 +74,7 @@ const totalProjects = projects.length;
       padding: 24px;
       margin-top: 20px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: opacity 0.2s ease;
     }
     .project-link {
       color: #0076ff;
@@ -55,7 +84,6 @@ const totalProjects = projects.length;
     }
     .project-link:hover { text-decoration: underline; }
 
-    /* Tag badges container & styling */
     .tags-container {
       display: flex;
       flex-wrap: wrap;
@@ -77,20 +105,29 @@ const totalProjects = projects.length;
   <h1>My Engineering Portfolio</h1>
   <p>Welcome to my workshop. Here is a look at the systems I've engineered and the tradeoffs I weighed along the way.</p>
 
-  <!-- Live Counter Badge -->
   <div class="counter-badge">
     {totalProjects} {totalProjects === 1 ? 'Project' : 'Projects'} Completed
   </div>
 
-  <section>
+  <!-- Dynamic Tag Filter Bar -->
+  <div class="filter-container">
+    <button class="filter-btn active" data-filter="all">All</button>
+    {allTags.map(tag => (
+      <button class="filter-btn" data-filter={tag.toLowerCase()}>{tag}</button>
+    ))}
+  </div>
+
+  <section id="projects-list">
     {projects.map(project => (
-      <div class="project-card">
+      <div 
+        class="project-card" 
+        data-tags={(project.data.tags || []).map(t => t.toLowerCase()).join(',')}
+      >
         <a class="project-link" href={`/projects/${project.id}`}>
           {project.data.title}
         </a>
         <p>{project.data.description}</p>
         
-        <!-- Render technology tag badges -->
         {project.data.tags && project.data.tags.length > 0 && (
           <div class="tags-container">
             {project.data.tags.map(tag => (
@@ -101,5 +138,31 @@ const totalProjects = projects.length;
       </div>
     ))}
   </section>
+
+  <!-- Client-Side Filter Script -->
+  <script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons and highlight clicked button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const selectedFilter = button.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const cardTags = card.getAttribute('data-tags') || '';
+          
+          if (selectedFilter === 'all' || cardTags.split(',').includes(selectedFilter)) {
+            (card as HTMLElement).style.display = 'block';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
