@@ -6,6 +6,9 @@ const projects = await getCollection('projects');
 
 // Dynamic technology stack extractor based on project context
 const getProjectTech = (title: string) => {
+  if (title.includes("Python Calculator")) {
+    return ["Python", "Tkinter", "JavaScript", "CSS Grid", "GitHub Pages"];
+  }
   if (title.includes("Competitive Intelligence")) {
     return ["Python", "FastAPI", "Gemini", "AI Agents", "Web Scraping"];
   }
