@@ -6,6 +6,9 @@ const projects = await getCollection('projects');
 
 // Dynamic technology stack extractor based on project context
 const getProjectTech = (title: string) => {
+  if (title.includes("Contact Manager")) {
+    return ["JavaScript (ES6+)", "HTML5/CSS3", "LocalStorage", "DOM Manipulation", "GitHub Pages"];
+  }
   if (title.includes("Quiz Application")) {
     return ["JavaScript", "HTML5/CSS3", "Python CLI", "DOM Manipulation", "GitHub Pages"];
   }
