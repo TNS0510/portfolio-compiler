@@ -31,7 +31,7 @@ When running the application on Windows, calling `json.load()` failed with a `Un
 - **User Authentication & Authorization:** Implement multi-tenant security using Flask-Login and password hashing (Bcrypt) to allow multiple isolated user accounts.
 
 ## Demo
-[Live Demo Link](https://tns0510.github.io/expense_tracker/)
+[Live Demo Link](https://expense-tracker-zvoz.onrender.com/)
 
 ## Source Code
 [GitHub Repository](https://github.com/TNS0510/expense_tracker)
